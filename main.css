@@ -20,6 +20,11 @@ footer {
   flex: 0 30px;
 }
 
+.a {
+  display: block;
+  text-align: center;
+}
+
 menu {
   flex: 1;
   display: flex;
@@ -44,6 +49,7 @@ footer a {
 #count {
   color: rgb(246, 239, 158);
 }
+
 
 .players {
   flex: 1;
@@ -148,9 +154,11 @@ footer a {
   header {
     display: none;
   }
+
   footer {
     display: none;
   }
+
   main {
     flex: 1 100vh;
   }

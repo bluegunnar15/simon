@@ -144,6 +144,10 @@ footer a {
   background-color: #300;
 }
 
+.linkFooter {
+  font-size: x-large;
+}
+
 .center {
   top: 50%;
   left: 50%;

@@ -110,6 +110,10 @@ footer a {
   border: thick solid rgb(27, 14, 100);
 }
 
+.container-fluid {
+  font-size: x-large;
+}
+
 .controls {
   position: absolute;
   border-radius: 50%;

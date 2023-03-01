@@ -43,14 +43,14 @@
     </div>
     <div class="game">
       <div class="button-container">
-        <button class="button-top-left"></button>
-        <button class="button-top-right"></button>
-        <button class="button-bottom-left"></button>
-        <button class="button-bottom-right"></button>
+        <button id="green" class="game-button button-top-left" onclick="game.pressButton(this)"></button>
+        <button id="red" class="game-button button-top-right" onclick="game.pressButton(this)"></button>
+        <button id="yellow" class="game-button button-bottom-left" onclick="game.pressButton(this)"></button>
+        <button id="blue" class="game-button button-bottom-right" onclick="game.pressButton(this)"></button>
         <div class="controls center">
           <div class="game-name">Simon<sup>&reg;</sup></div>
-          <div class="score center">--</div>
-          <button class="btn btn-primary">Reset</button>
+          <div id="score" class="score center">--</div>
+          <button class="btn btn-primary" onclick="game.reset()">Reset</button>
         </div>
       </div>
     </div>
@@ -62,6 +62,7 @@
     <div>To Learn More About the Modifer Click <a href="https://dumbquestions.click">Here</a></div>
   </div>
 
+  <script src="play.js"></script>
 </body>
 
 </html>

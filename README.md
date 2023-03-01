@@ -1,3 +1,3 @@
-# simon-html
+# simon-javascript
 
-This deliverable demonstrates the use of basic HTML elements for structure, basic formatting, input, output, links, and drawing.
+This deliverable demonstrates the use of basic JavaScript for interactivity.

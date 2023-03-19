@@ -1,0 +1,15 @@
+{
+  "name": "simon",
+  "version": "1.0.0",
+  "description": "This deliverable demonstrates the use of basic HTML elements for structure, basic formatting, input, output, links, and drawing.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

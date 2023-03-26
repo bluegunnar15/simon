@@ -4,15 +4,6 @@ const userName = process.env.MONGOUSER;
 const password = process.env.MONGOPASSWORD;
 const hostname = process.env.MONGOHOSTNAME;
 
-//for debugging
-//const userName = "cs260";
-//const password = "cs260Password";
-//const hostname = "cluster0.jdw1mv6.mongodb.net/";
-//console.log("User " + userName);
-//console.log("pass " + password);
-//console.log("host " + hostname);
-
-
 if (!userName) {
   throw Error('Database not configured. Set environment variables');
 }

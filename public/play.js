@@ -1,3 +1,7 @@
+// Event messages
+const GameEndEvent = 'gameEnd';
+const GameStartEvent = 'gameStart';
+
 const btnDescriptions = [
   { file: 'sound1.mp3', hue: 120 },
   { file: 'sound2.mp3', hue: 0 },
@@ -40,6 +44,7 @@ class Game {
   sequence;
   playerPlaybackPos;
   mistakeSound;
+  socket;
 
   constructor() {
     this.buttons = new Map();
@@ -56,6 +61,8 @@ class Game {
 
     const playerNameEl = document.querySelector('.player-name');
     playerNameEl.textContent = this.getPlayerName();
+
+    this.configureWebSocket();
   }
 
   async pressButton(button) {
@@ -89,6 +96,9 @@ class Game {
     this.addButton();
     await this.playSequence();
     this.allowPlayer = true;
+
+    // Let other players know a new game has started
+    this.broadcastEvent(this.getPlayerName(), GameStartEvent, {});
   }
 
   getPlayerName() {
@@ -138,6 +148,9 @@ class Game {
         body: JSON.stringify(newScore),
       });
 
+      // Let other players know the game has concluded
+      this.broadcastEvent(userName, GameEndEvent, newScore);
+
       // Store what the service gave us as the high scores
       const scores = await response.json();
       localStorage.setItem('scores', JSON.stringify(scores));
@@ -173,15 +186,49 @@ class Game {
 
     localStorage.setItem('scores', JSON.stringify(scores));
   }
+
+  // Functionality for peer communication using WebSocket
+
+  configureWebSocket() {
+    const protocol = window.location.protocol === 'http:' ? 'ws' : 'wss';
+    this.socket = new WebSocket(`${protocol}://${window.location.host}/ws`);
+    this.socket.onopen = (event) => {
+      this.displayMsg('system', 'game', 'connected');
+    };
+    this.socket.onclose = (event) => {
+      this.displayMsg('system', 'game', 'disconnected');
+    };
+    this.socket.onmessage = async (event) => {
+      const msg = JSON.parse(await event.data.text());
+      if (msg.type === GameEndEvent) {
+        this.displayMsg('player', msg.from, `scored ${msg.value.score}`);
+      } else if (msg.type === GameStartEvent) {
+        this.displayMsg('player', msg.from, `started a new game`);
+      }
+    };
+  }
+
+  displayMsg(cls, from, msg) {
+    const chatText = document.querySelector('#player-messages');
+    chatText.innerHTML =
+      `<div class="event"><span class="${cls}-event">${from}</span> ${msg}</div>` + chatText.innerHTML;
+  }
+
+  broadcastEvent(from, type, value) {
+    const event = {
+      from: from,
+      type: type,
+      value: value,
+    };
+    this.socket.send(JSON.stringify(event));
+  }
 }
 
 const game = new Game();
 
 function delay(milliseconds) {
   return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, milliseconds);
+    setTimeout(resolve, milliseconds);
   });
 }
 
